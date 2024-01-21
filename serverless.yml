@@ -53,6 +53,37 @@ custom:
   # DynamoDB table names
   notesTableName: "notes-${self:provider.stage}"
   usersTableName: "users-${self:provider.stage}"
+  # Serverless offline plugin config
+  serverless-offline:
+    httpPort: 3000
+  # Serverless dynamodb offline plugin config
+  dynamodb:
+    stages:
+      - dev
+    start:
+      docker: true # use docker
+      port: 8000
+      inMemory: true
+      migrate: true
+  # Serverless esbuild plugin config
+  esbuild:
+    bundle: true
+    minify: false
+    concurrency: 10
+    exclude:
+      - aws-sdk
+  # Serverless add api key plugin config
+  apiKeys:
+    - name: PublicLimitKey
+      usagePlan:
+        name: "limitedUsage"
+        description: "low level usage plan"
+        quota:
+          limit: 1000
+          period: DAY
+        throttle:
+          burstLimit: 100
+          rateLimit: 20
 
 # AWS Lambda Functions
 functions:
