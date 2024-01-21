@@ -4,9 +4,9 @@ interface User {
   id: string;
   name: string;
   email: string;
-  createdAt: string;
-  updatedAt: string;
-  isDeleted: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+  isDeleted?: boolean;
 }
 
 /**

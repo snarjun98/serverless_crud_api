@@ -25,7 +25,7 @@ export const UserEntity = new Entity({
     email: "string",
     name: "string",
     updatedAt: "string",
-    isDeleted: "boolean",
+    isDeleted: { type: "boolean", default: false },
   },
 
   table: UsersTable,
