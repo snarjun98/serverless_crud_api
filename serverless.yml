@@ -4,7 +4,6 @@ app: serverless-crud-api
 service: serverless-crud-api
 frameworkVersion: "3"
 configValidationMode: error
-useDotenv: true
 
 # Packaging and Deployment Configuration
 package:
