@@ -6,6 +6,17 @@ frameworkVersion: "3"
 configValidationMode: error
 useDotenv: true
 
+# Packaging and Deployment Configuration
+package:
+  individually: true
+
+# Serverless Plugins
+plugins:
+  - serverless-add-api-key # used for creating api key and adding rate limit plan
+  - serverless-esbuild # used for bundling
+  - serverless-dynamodb #used for local ddb
+  - serverless-offline # used for local testing
+
 # AWS Provider Configuration
 provider:
   name: aws
