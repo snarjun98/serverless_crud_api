@@ -16,5 +16,4 @@ export const noteEventSchema = z.object({
   body: noteEventBodySchema,
 });
 
-// export type projectEventBodyType = z.infer<typeof projectEventSchema>;
 export type noteEventBodyType = z.infer<typeof noteEventBodySchema>;

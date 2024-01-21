@@ -1,0 +1,10 @@
+# lambda def for get Users with api trigger
+getUsers:
+  handler: src/functions/users/get-users/index.handler
+  description: "function to get all the users"
+  events:
+    - http:
+        path: /users
+        method: get
+        cors: true
+        private: false
