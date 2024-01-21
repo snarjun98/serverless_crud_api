@@ -25,23 +25,32 @@ export const createNote = async (data: Notes) => {
  * Updates an existing note.
  * @function updateNote
  * @async
- * @param {string} content - The new content for the note.
- * @param {string} userId - The unique identifier of the user updating the note.
- * @param {string} id - The unique identifier of the note to be updated.
+ * @param {string} data.title - The new title for the note.
+ * @param {string} data.content - The new content for the note.
+ * @param {string} data.userId - The unique identifier of the user updating the note.
+ * @param {string} data.id - The unique identifier of the note to be updated.
  * @returns {Promise<void>} - A promise that resolves when the note is updated.
  */
-export const updateNote = async (
-  content: string,
-  userId: string,
-  id: string,
-) => {
-  return await NoteEntity.update({
-    content,
-    updatedAt: new Date().toISOString(),
-    updatedBy: userId,
-    userId,
-    id,
-  });
+export const updateNote = async (data: {
+  title: string;
+  content: string;
+  userId: string;
+  id: string;
+}) => {
+  const { content, userId, title, id } = data;
+  return await NoteEntity.update(
+    {
+      content,
+      updatedAt: new Date().toISOString(),
+      updatedBy: userId,
+      userId,
+      id,
+      title,
+    },
+    {
+      returnValues: "UPDATED_NEW",
+    },
+  );
 };
 
 /**

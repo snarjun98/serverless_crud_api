@@ -6,14 +6,46 @@ frameworkVersion: "3"
 configValidationMode: error
 useDotenv: true
 
+# Packaging and Deployment Configuration
+package:
+  individually: true
+
+# Serverless Plugins
+plugins:
+  - serverless-add-api-key # used for creating api key and adding rate limit plan
+  - serverless-esbuild # used for bundling
+  - serverless-dynamodb #used for local ddb
+  - serverless-offline # used for local testing
+
 # AWS Provider Configuration
 provider:
   name: aws
   runtime: nodejs16.x
   deploymentMethod: direct
   stage: ${opt:stage, 'dev'}
-  region: "ap-south-1"
-
+  region:
+    "ap-south-1"
+    # functions config
+  versionFunctions: false
+  timeout: 10
+  environment:
+    NOTES_TABLE_NAME: ${self:custom.notesTableName}
+    USERS_TABLE_NAME: ${self:custom.usersTableName}
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    NODE_OPTIONS: --enable-source-maps --stack-trace-limit=1000
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      # Restrict IAM role permissions to specific tables for the stage
+      Resource:
+        - "Fn::GetAtt": [NotesTable, Arn]
+        - "Fn::GetAtt": [UsersTable, Arn]
 # Custom Configuration
 custom:
   # Prefix for naming resources
@@ -21,6 +53,41 @@ custom:
   # DynamoDB table names
   notesTableName: "notes-${self:provider.stage}"
   usersTableName: "users-${self:provider.stage}"
+  # Serverless offline plugin config
+  serverless-offline:
+    httpPort: 3000
+  # Serverless dynamodb offline plugin config
+  dynamodb:
+    stages:
+      - dev
+    start:
+      docker: true # use docker
+      port: 8000
+      inMemory: true
+      migrate: true
+  # Serverless esbuild plugin config
+  esbuild:
+    bundle: true
+    minify: false
+    concurrency: 10
+    exclude:
+      - aws-sdk
+  # Serverless add api key plugin config
+  apiKeys:
+    - name: PublicLimitKey
+      usagePlan:
+        name: "limitedUsage"
+        description: "low level usage plan"
+        quota:
+          limit: 1000
+          period: DAY
+        throttle:
+          burstLimit: 100
+          rateLimit: 20
+
+# AWS Lambda Functions
+functions:
+  - ${file(resource/functions/notes/note-functions.yml)}
 
 # AWS Resources (DDB resources)
 resources:

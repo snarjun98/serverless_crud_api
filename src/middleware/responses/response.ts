@@ -12,7 +12,7 @@ import { APIGatewayProxyResult } from "aws-lambda";
  */
 export const awsLambdaResponse = (
   statusCode: number,
-  body: string,
+  body: any,
 ): APIGatewayProxyResult => {
   return {
     isBase64Encoded: false,

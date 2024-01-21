@@ -1,0 +1,53 @@
+# lambda def for get Notes with api trigger
+getNotes:
+  handler: src/functions/notes/get-notes/index.handler
+  description: "function to get all the notes"
+  events:
+    - http:
+        path: /notes
+        method: get
+        cors: true
+        private: false
+# lambda def for create Note with api trigger
+postNote:
+  handler: src/functions/notes/post-note/index.handler
+  description: "function to create new note"
+  events:
+    - http:
+        path: /notes
+        method: post
+        cors: true
+        private: false
+
+# lambda def for update Note with api trigger
+patchNote:
+  handler: src/functions/notes/note-id/patch-note/index.handler
+  description: "function to update a note"
+  events:
+    - http:
+        path: /notes/{noteId}
+        method: patch
+        cors: true
+        private: false
+
+# lambda def for get Note with api trigger
+getNote:
+  handler: src/functions/notes/note-id/get-note/index.handler
+  description: "function to get a note"
+  events:
+    - http:
+        path: /notes/{noteId}
+        method: get
+        cors: true
+        private: false
+
+# lambda def for delete Note with api trigger
+deleteNote:
+  handler: src/functions/notes/note-id/delete-note/index.handler
+  description: "function to delete a note"
+  events:
+    - http:
+        path: /notes/{noteId}
+        method: delete
+        cors: true
+        private: false
