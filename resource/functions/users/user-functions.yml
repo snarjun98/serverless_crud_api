@@ -8,3 +8,14 @@ getUsers:
         method: get
         cors: true
         private: false
+
+# lambda def for add User with api trigger
+postUser:
+  handler: src/functions/users/post-user/index.handler
+  description: "function to add a user"
+  events:
+    - http:
+        path: /users
+        method: post
+        cors: true
+        private: false
