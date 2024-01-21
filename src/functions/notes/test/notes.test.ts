@@ -3,7 +3,7 @@ import { handler as getNotesHandler } from "../get-notes/index";
 import { handler as createNoteHandler } from "../post-note/index";
 import { handler as updateNoteHandler } from "../note-id/patch-note";
 import { handler as getNoteHandler } from "../note-id/get-note";
-
+import { handler as deleteNoteHandler } from "../note-id/delete-note";
 import { randomUUID } from "crypto";
 import { addUser } from "../../../db/controller/users-controller";
 import { UserEntity } from "../../../db/models/users-model";
@@ -122,6 +122,8 @@ describe("note tests", () => {
     const response = await updateNoteHandler(event, context);
     expect(response.statusCode).toBe(StatusCodes.BAD_REQUEST);
   });
+
+  // get note tests
   test("get note", async () => {
     const event = {
       httpMethod: "GET",
@@ -138,7 +140,6 @@ describe("note tests", () => {
     expect(JSON.parse(response.body).data.title).toBe("updated note");
   });
 
-  // get note tests
   test("get note with validation error", async () => {
     const event = {
       httpMethod: "GET",
@@ -149,6 +150,35 @@ describe("note tests", () => {
       requestContext,
     } as any;
     const response = await getNoteHandler(event, context);
+    expect(response.statusCode).toBe(StatusCodes.BAD_REQUEST);
+  });
+
+  // delete note tests
+  test("delete note", async () => {
+    const event = {
+      httpMethod: "DELETE",
+      queryStringParameters: {
+        userId,
+      },
+      pathParameters: {
+        noteId: "1",
+      },
+      requestContext,
+    } as any;
+    const response = await deleteNoteHandler(event, context);
+    expect(response.statusCode).toBe(StatusCodes.OK);
+    expect(JSON.parse(response.body).message).toBe("note deleted successfully");
+  });
+  test("delete note with validation error", async () => {
+    const event = {
+      httpMethod: "DELETE",
+      queryStringParameters: {},
+      pathParameters: {
+        noteId: "1",
+      },
+      requestContext,
+    } as any;
+    const response = await deleteNoteHandler(event, context);
     expect(response.statusCode).toBe(StatusCodes.BAD_REQUEST);
   });
 });

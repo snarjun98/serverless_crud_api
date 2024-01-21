@@ -40,3 +40,14 @@ getNote:
         method: get
         cors: true
         private: false
+
+# lambda def for delete Note with api trigger
+deleteNote:
+  handler: src/functions/notes/note-id/delete-note/index.handler
+  description: "function to delete a note"
+  events:
+    - http:
+        path: /notes/{noteId}
+        method: delete
+        cors: true
+        private: false
