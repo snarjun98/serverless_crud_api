@@ -15,5 +15,4 @@ export const patchNoteEventSchema = z.object({
   pathParameters: patchNoteEventPathSchema,
 });
 
-// export type projectEventBodyType = z.infer<typeof projectEventSchema>;
 export type patchNoteEventBodyType = z.infer<typeof patchNoteEventBodySchema>;

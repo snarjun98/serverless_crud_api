@@ -29,3 +29,14 @@ patchNote:
         method: patch
         cors: true
         private: false
+
+# lambda def for get Note with api trigger
+getNote:
+  handler: src/functions/notes/note-id/get-note/index.handler
+  description: "function to get a note"
+  events:
+    - http:
+        path: /notes/{noteId}
+        method: get
+        cors: true
+        private: false
