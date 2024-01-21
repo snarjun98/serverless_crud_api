@@ -48,5 +48,5 @@ const config = process.env.IS_OFFLINE
  */
 export const DocumentClient = DynamoDBDocumentClient.from(
   new DynamoDBClient(config),
-  translateConfig
+  translateConfig,
 );
