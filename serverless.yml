@@ -1,0 +1,20 @@
+# Serverless Configuration
+org: snarjun98
+app: serverless-crud-api
+service: serverless-crud-api
+frameworkVersion: "3"
+configValidationMode: error
+useDotenv: true
+
+# AWS Provider Configuration
+provider:
+  name: aws
+  runtime: nodejs16.x
+  deploymentMethod: direct
+  stage: ${opt:stage, 'dev'}
+  region: "ap-south-1"
+
+# Custom Configuration
+custom:
+  # Prefix for naming resources
+  prefix: ${self:service}
