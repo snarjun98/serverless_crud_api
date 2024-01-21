@@ -18,3 +18,14 @@ postNote:
         method: post
         cors: true
         private: false
+
+# lambda def for update Note with api trigger
+patchNote:
+  handler: src/functions/notes/note-id/patch-note/index.handler
+  description: "function to update a note"
+  events:
+    - http:
+        path: /notes/{noteId}
+        method: patch
+        cors: true
+        private: false

@@ -1,6 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import { handler as getNotesHandler } from "../get-notes/index";
 import { handler as createNoteHandler } from "../post-note/index";
+import { handler as updateNoteHandler } from "../note-id/patch-note";
 import { randomUUID } from "crypto";
 import { addUser } from "../../../db/controller/users-controller";
 import { UserEntity } from "../../../db/models/users-model";
@@ -73,6 +74,45 @@ describe("note tests", () => {
       requestContext,
     } as any;
     const response = await getNotesHandler(event, context);
+    expect(response.statusCode).toBe(StatusCodes.BAD_REQUEST);
+  });
+  test("update note", async () => {
+    const event = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      httpMethod: "PATCH",
+      body: JSON.stringify({
+        userId,
+        title: "updated note",
+        content: "updated content",
+      }),
+      pathParameters: {
+        noteId: "1",
+      },
+      requestContext,
+    } as any;
+    const response = await updateNoteHandler(event, context);
+    expect(response.statusCode).toBe(StatusCodes.OK);
+    expect(JSON.parse(response.body).data.content).toBe("updated content");
+    expect(JSON.parse(response.body).data.title).toBe("updated note");
+  });
+  test("update note with validation error", async () => {
+    const event = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      httpMethod: "PATCH",
+      body: JSON.stringify({
+        userId,
+        content: "updated content",
+      }),
+      pathParameters: {
+        noteId: "1",
+      },
+      requestContext,
+    } as any;
+    const response = await updateNoteHandler(event, context);
     expect(response.statusCode).toBe(StatusCodes.BAD_REQUEST);
   });
 });
