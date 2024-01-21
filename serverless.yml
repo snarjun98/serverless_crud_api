@@ -18,3 +18,11 @@ provider:
 custom:
   # Prefix for naming resources
   prefix: ${self:service}
+  # DynamoDB table names
+  notesTableName: "notes-${self:provider.stage}"
+  usersTableName: "users-${self:provider.stage}"
+
+# AWS Resources (DDB resources)
+resources:
+  - ${file(resource/dynamodb/notes.yml)}
+  - ${file(resource/dynamodb/users.yml)}

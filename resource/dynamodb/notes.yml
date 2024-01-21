@@ -1,0 +1,25 @@
+# DynamoDB table resource for storing notes.
+NotesTable:
+  Type: AWS::DynamoDB::Table
+  DeletionPolicy: Delete
+  UpdateReplacePolicy: Delete
+  Properties:
+    # Use the custom notesTableName from the serverless configuration for the table name.
+    TableName: ${self:custom.notesTableName}
+    AttributeDefinitions:
+      - AttributeName: userId
+        AttributeType: S
+
+      - AttributeName: id
+        AttributeType: S
+
+    # Specify the key schema with userId as the hash key and id as the range key.
+    KeySchema:
+      - AttributeName: userId
+        KeyType: HASH # HASH indicates the attribute as the hash key.
+
+      - AttributeName: id
+        KeyType: RANGE # RANGE indicates the attribute as the range key.
+
+    # Set the billing mode to PAY_PER_REQUEST for on-demand capacity.
+    BillingMode: PAY_PER_REQUEST

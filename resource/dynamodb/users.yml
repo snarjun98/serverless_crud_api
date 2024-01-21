@@ -1,0 +1,18 @@
+# DynamoDB table resource for storing user data.
+UsersTable:
+  Type: AWS::DynamoDB::Table
+  DeletionPolicy: Delete
+  UpdateReplacePolicy: Delete
+  Properties:
+    # Use the custom usersTableName from the serverless configuration for the table name.
+    TableName: ${self:custom.usersTableName}
+    AttributeDefinitions:
+      - AttributeName: id
+        AttributeType: S
+    # Specify the key schema with id as the hash key.
+    KeySchema:
+      - AttributeName: id
+        KeyType: HASH # HASH indicates the attribute as the hash key.
+
+    # Set the billing mode to PAY_PER_REQUEST for on-demand capacity.
+    BillingMode: PAY_PER_REQUEST
