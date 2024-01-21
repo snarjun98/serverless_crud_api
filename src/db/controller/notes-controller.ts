@@ -33,7 +33,7 @@ export const createNote = async (data: Notes) => {
 export const updateNote = async (
   content: string,
   userId: string,
-  id: string
+  id: string,
 ) => {
   return await NoteEntity.update({
     content,
