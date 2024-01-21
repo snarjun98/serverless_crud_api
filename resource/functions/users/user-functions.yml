@@ -1,0 +1,32 @@
+# lambda def for get Users with api trigger
+getUsers:
+  handler: src/functions/users/get-users/index.handler
+  description: "function to get all the users"
+  events:
+    - http:
+        path: /users
+        method: get
+        cors: true
+        private: false
+
+# lambda def for add User with api trigger
+postUser:
+  handler: src/functions/users/post-user/index.handler
+  description: "function to add a user"
+  events:
+    - http:
+        path: /users
+        method: post
+        cors: true
+        private: false
+
+# lambda def for get User with api trigger
+getUser:
+  handler: src/functions/users/user-id/get-user/index.handler
+  description: "function to get a user"
+  events:
+    - http:
+        path: /users/{userId}
+        method: get
+        cors: true
+        private: false

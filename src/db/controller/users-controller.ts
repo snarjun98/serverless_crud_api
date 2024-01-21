@@ -1,9 +1,9 @@
 import { UserEntity } from "../models/users-model";
 
 interface User {
-  id: string;
   name: string;
   email: string;
+  id?: string;
   createdAt?: string;
   updatedAt?: string;
   isDeleted?: boolean;
