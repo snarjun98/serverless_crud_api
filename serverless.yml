@@ -19,12 +19,12 @@ plugins:
 # AWS Provider Configuration
 provider:
   name: aws
-  runtime: nodejs16.x
   deploymentMethod: direct
   stage: ${opt:stage, 'dev'}
   region:
     "ap-south-1"
     # functions config
+  runtime: nodejs16.x
   versionFunctions: false
   timeout: 10
   environment:
@@ -37,6 +37,7 @@ provider:
       Action:
         - dynamodb:DescribeTable
         - dynamodb:Query
+        - dynamodb:Scan
         - dynamodb:GetItem
         - dynamodb:PutItem
         - dynamodb:UpdateItem
