@@ -57,6 +57,8 @@ Ensure you have the following installed:
 ## CI/CD using Serverless CI/CD
 
   Below Image shows the config in serverlessCI/CD
+  <img width="1164" alt="Screenshot 2024-01-22 at 6 00 43 AM" src="https://github.com/snarjun98/serverless_crud_api/assets/57265937/58aabb0c-9358-4b67-be56-8c0d7f143f6b">
+
 
 ## Deployment
 
